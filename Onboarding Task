@@ -1,0 +1,40 @@
+Question a:
+
+SELECT OwnerProperty.PropertyId, Property.Name
+FROM [dbo].[Property] inner join [dbo].[OwnerProperty] on Property.Id = OwnerProperty.Id
+where OwnerId =1426
+
+Question b:
+SELECT OwnerProperty.PropertyId, Property.Name as PropertyName, OwnerProperty.OwnerId, PropertyHomeValue.Value as PropertyValue
+FROM [dbo].[Property] inner join [dbo].[OwnerProperty] on Property.Id = OwnerProperty.Id
+inner join dbo.PropertyHomeValue on Property.AddressId = PropertyHomeValue.PropertyId
+
+where OwnerId = 1426
+
+Question C:
+i)
+SELECT OwnerProperty.PropertyId, Property.Name, TenantProperty.PaymentAmount, TenantProperty.PaymentFrequencyId, TenantProperty.StartDate, TenantProperty.EndDate, PaymentAmount*DATEDIFF(WEEK,StartDate,EndDate) AS TotalPayment
+FROM [dbo].[Property] inner join [dbo].[OwnerProperty] on Property.Id = OwnerProperty.Id
+inner join dbo.PropertyHomeValue on Property.AddressId = PropertyHomeValue.PropertyId
+inner join [dbo].[TenantProperty] on Property.AddressId = TenantProperty.Id
+
+where OwnerId = 1426
+
+ii)
+SELECT OwnerProperty.PropertyId, Property.Name, OwnerProperty.OwnerId, PropertyFinance.Yield
+FROM [dbo].[Property] full join [dbo].[OwnerProperty] on Property.Id = OwnerProperty.Id
+full join [dbo].[PropertyFinance] on Property.id = PropertyFinance.PropertyId
+where OwnerId = 1426
+Question D:
+SELECT JOB.PropertyId, JOB.OwnerId, JOB.JobDescription, JobWatchList.MarketJobId
+FROM [dbo].[Job] INNER JOIN JobWatchList ON JOB.Id = JobWatchList.Id
+
+
+Question E: 
+
+select person.FirstName, person.LastName, Property.Name as PropertyName, OwnerProperty.OwnerId, TenantProperty.PaymentAmount as WeeklyPayment, PaymentAmount*2 as FortnightlyPayment,PaymentAmount*4 as MonthlyPayment
+from [dbo].[Person] inner join Property on Person.id = Property.Id
+full join [dbo].[TenantProperty] on Property.AddressId = TenantProperty.Id
+full join [dbo].[OwnerProperty] on Property.Id = OwnerProperty.Id
+where OwnerId = 1426
+
